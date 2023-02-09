@@ -1,10 +1,17 @@
 package model
 
 data class Parking(
-    val parkingSize: Int,
-    val parking: MutableList<Car>,
+    val maxParkingSize: Int,
+    val cars: MutableMap<Int, Car?> = mutableMapOf(),
 ) {
-    fun getCarsOnParking(): List<Car> = parking.filter { it.status == CarStatus.ON_PARKING }
 
-    fun getEmptyParkingPlace(): Int = parkingSize - getCarsOnParking().size
+    init {
+        for (i in 1..maxParkingSize) {
+            cars[i] = null
+        }
+    }
+
+    val amountCarsOnParking: Int get() = cars.values.filterNotNull().size
+
+    fun getCarPlace(car: Car?): Int = cars.filterValues { it == car }.keys.first()
 }
