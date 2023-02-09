@@ -16,4 +16,8 @@ interface Manager {
     fun getInfoByCar(carNumber: String): Boolean
 
     fun getInfoByPlace(place: Int): Boolean
+
+    fun getCurrentStats()
+
+    fun getAllStats()
 }
