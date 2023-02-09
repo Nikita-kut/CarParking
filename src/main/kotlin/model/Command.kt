@@ -20,6 +20,8 @@ sealed class Command(open val command: String) {
                 $RETURN - забрать автомобиль с парковки
                 $INFO_BY_CAR - получить место авто на парковке
                 $INFO_BY_PLACE - получить инфу о машине по парковочному месту
+                $CURRENT_STATS - узнать текущую загрузку парковки
+                $ALL_STATS - статистика по парковке за всё время
             """.trimIndent()
             )
         }
@@ -35,7 +37,7 @@ sealed class Command(open val command: String) {
     data class Park(override val command: String = PARK) : Command(command) {
 
         override fun print() {
-            println("Чтобы запарковать автомобиль, введите Марку Номер Цвет Имя владельца")
+            println("Чтобы запарковать автомобиль, введите: Марку | Номер | Цвет | Имя владельца")
         }
 
         fun printIncorrectInput() {
@@ -84,6 +86,20 @@ sealed class Command(open val command: String) {
         }
     }
 
+    data class CurrentStats(override val command: String = CURRENT_STATS) : Command(command) {
+
+        override fun print() {
+            TODO("Not yet implemented")
+        }
+    }
+
+    data class AllStats(override val command: String = ALL_STATS) : Command(command) {
+
+        override fun print() {
+            TODO("Not yet implemented")
+        }
+    }
+
     private companion object {
         const val START = "/start"
         const val HELP = "/help"
@@ -92,5 +108,7 @@ sealed class Command(open val command: String) {
         const val RETURN = "/return"
         const val INFO_BY_CAR = "/park_info_by_car"
         const val INFO_BY_PLACE = "/park_info_by_place"
+        const val CURRENT_STATS = "/park_stats"
+        const val ALL_STATS = "/park_all_stats"
     }
 }

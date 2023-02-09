@@ -14,6 +14,8 @@ fun main() {
     val _return = Return()
     val infoByCar = InfoByCar()
     val infoByPlace = InfoByPlace()
+    val currentStats = CurrentStats()
+    val allStats = AllStats()
 
     start.print()
     while (true) {
@@ -71,6 +73,10 @@ fun main() {
                             }
                         }
                     }
+
+                    currentStats.command -> manager.getCurrentStats()
+
+                    allStats.command -> manager.getAllStats()
 
                     else -> {
                         println("Некорректная команда")

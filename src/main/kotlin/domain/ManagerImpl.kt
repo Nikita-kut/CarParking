@@ -8,11 +8,14 @@ class ManagerImpl(override val parking: Parking) : Manager {
     override val canParkCar: Boolean
         get() = parking.amountCarsOnParking < parking.maxParkingSize
 
+    private var parkingCounter = 0
+
     override fun parkCar(car: Car) {
         while (true) {
             val randomPlace = Random.nextInt(parking.maxParkingSize + 1)
             if (!parking.cars.filterValues { it != null }.keys.contains(randomPlace)) {
                 parking.cars[randomPlace] = car
+                parkingCounter ++
                 println("Авто - ${car.name}, Номер - ${car.number}, Цвет - ${car.colorName}, Владелец - ${car.owner.name} запаркован на место P-${parking.getCarPlace(car)}")
                 printAllParkingInfo()
                 break
@@ -53,15 +56,24 @@ class ManagerImpl(override val parking: Parking) : Manager {
         }
     }
 
-    private fun printAllParkingInfo() {
+    override fun getCurrentStats() {
         println("--- --- --- ---")
         println("Сейчас свободно ${parking.maxParkingSize - parking.amountCarsOnParking} из ${parking.maxParkingSize} мест")
+    }
+
+    override fun getAllStats() {
+        println("За всё время работы было запарковано $parkingCounter автомобилей")
+    }
+
+    private fun printAllParkingInfo() {
         if (parking.cars.values.filterNotNull().isNotEmpty()) {
             println("--- --- --- ---")
             println("Запаркованы следующие машины:")
             parking.cars.toSortedMap().forEach {
                 if (it.value != null) { println("Место P-${it.key}, Авто - ${it.value?.name}, Номер - ${it.value?.number}, Цвет - ${it.value?.colorName}, Владелец - ${it.value?.owner?.name}") }
             }
+        } else {
+            getCurrentStats()
         }
     }
 }
